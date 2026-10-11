@@ -1,0 +1,843 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{amsmath,amssymb,amsthm,epsfig}
+\usepackage{graphpap}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{bm}
+
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+
+ \setlength\topmargin{-0.5in}
+ \setlength\headsep{0in}
+ \setlength\textwidth{6.5in}
+ \setlength\textheight{9in}
+ \setlength\oddsidemargin{0in}
+  \setlength\evensidemargin{0in}
+\usepackage[pdftex]{hyperref}
+
+\title{EE 5239 Optimization Homework 2 Cover Sheet}
+\date{}
+\begin{document}
+\maketitle
+
+\noindent Instructor name: Mingyi Hong \hspace{1.8 in} Student name: \underline{\hspace{1.5in}} \\
+
+\vspace{1in}
+
+\noindent \fbox{\parbox{\textwidth}{
+		\begin{itemize}
+			\item Date assigned: Wednesday 9/30/2026
+			\item Date due: Friday 10/09/2026 11:59pm
+			\item This cover sheet must be signed and submitted along with the homework answers on additional sheets.
+			\item By submitting this homework with my name affixed above,
+			\begin{itemize}
+				\item I understand that late homework will not be accepted,
+				\item I acknowledge that I am aware of the University's policy concerning academic misconduct (appended below),
+				\item I attest that the work I am submitting for this homework assignment is solely my own, and
+				\item I understand that suspiciously similar homework submitted by multiple individuals will be reported to the Dean of Students Office for investigation.
+			\end{itemize}
+			
+			\item Academic Misconduct in any form is in violation of the University's Student Disciplinary Regulations and will not be tolerated.  This includes, but is not limited to: copying or sharing answers on tests or assignments, plagiarism, having someone else do your academic work or working with someone on homework when not permitted to do so by the instructor.  Depending on the act, a student could receive an F grade on the test/assignment, F grade for the course, and could be suspended or expelled from the University. 
+		\end{itemize}
+	}}
+
+
+\clearpage
+
+\section{Reading} 
+\begin{itemize}
+\item Reading: Textbook Section 1.1 - 1.2
+\item Appendix A. 
+\end{itemize}
+
+
+\section{Problems}
+
+\begin{enumerate}
+
+	\subsection{Textbook Problems}
+	\item 1.2.1
+
+	Consider the problem of minimizing the function of two variables $f(x,y) = 3x^2 + y^4$
+
+	(a) Apply one iteration of the steepest descent method with 
+	$(1, -2)$ as the starting point and with the stepsize chosen
+	by the Armijo rule with 
+
+	Steepest Descent:
+
+	\[ x^{r+1} = x^r - \sigma \alpha_r \nabla f(x^r) \]
+
+	$s = 1, \sigma = 0.1, \beta = 0.5$
+
+	\[ \nabla f(x,y) = 
+	\begin{bmatrix} 6x \\ 4y^3 \end{bmatrix}
+	\]
+
+	\[ \nabla f(1,-2) = 
+	\begin{bmatrix} 6 \\ -32 \end{bmatrix}
+	\]
+
+	Steepest direction:
+
+	\[ d_0 = - \nabla f =
+	\begin{bmatrix} -6 \\ 32 \end{bmatrix}
+	\] 
+
+	\[ f(1,-2) = 19 \]
+
+	Armijo rule:
+
+	\[ f(x_0 + \alpha d_0) \leq f(x_0) +
+	\sigma \alpha \nabla f(x_0)^T d_0 \] 
+
+	\[ \nabla f(x_0) d_0 =
+	-\| \nabla f(x_0) \|^2 = -1060 \]
+
+	\[ f(x_0) +
+	\sigma \alpha \nabla f(x_0)^T d_0 
+	= 19 - 106 \alpha \]
+
+	Armijo step sizes:
+
+	\[ \alpha = s \beta^m \] 
+
+	Therefore we test:
+
+	\[ \alpha = 1, 1/2, 1/4, 1/8, 1/16... \] 
+
+	For $m = 4$:
+
+	\[ \sigma = 1/16 \rightarrow (x,y) = 
+	(x_0 + \alpha d_0) = (5/8, 0)\]
+
+	\[ f(5/8, 0) = 3(5/8)^2 = 1.171875 \ and \ 19 - 106(1/16) = 12.375\]
+
+	Since
+
+	\[ 1.171875 \leq 12.375 \]  
+
+	\[ \alpha_0 = 1/16 \]
+
+	is accepted. Lower $m$ values were tested on paper but rejected
+	for not fufilling Armijo rule inequality.
+
+	After one iteration:
+
+	\[ x_1 = (5/8, 0) \]
+
+	(b) Repeat (a) using $s = 1, \sigma = 0.1, \beta = 0.1$ instead.
+	How does the cost of the new iterate compare to that obtained
+	in (a)? 
+	Comment on the tradeoffs involved in the choice of $\alpha$
+
+	\[
+	\nabla f(x,y) =  
+	\begin{bmatrix} 6x \\ 4y^3 \end{bmatrix}
+	\]
+
+	\[
+	\nabla f(1,-2) =  
+	\begin{bmatrix} 6 \\ -32 \end{bmatrix}
+	\]
+
+	Steepest direction:
+
+	\[
+	d_0 = - \nabla f =
+	\begin{bmatrix} -6 \\ 32 \end{bmatrix}
+	\]
+
+	\[
+	f(1,-2) = 19
+	\]
+
+	Armijo rule:
+
+	\[
+	f(x_0 + \alpha d_0) \leq f(x_0) +
+	\sigma \alpha \nabla f(x_0)^T d_0
+	\]
+
+	\[
+	\nabla f(x_0)^T d_0 =
+	-\| \nabla f(x_0) \|^2 = -1060
+	\]
+
+	\[
+	f(x_0) +
+	\sigma \alpha \nabla f(x_0)^T d_0
+	= 19 - 106\alpha
+	\]
+
+	For $m=1$:
+
+	\[
+	\alpha = 0.1 \rightarrow (x,y) =
+	(x_0 + \alpha d_0) = (0.4, 1.2)
+	\]
+
+	\[
+	f(0.4, 1.2)
+	= 3(0.4)^2 + (1.2)^4
+	= 2.5536
+	\]
+
+	\[
+	19 - 106(0.1) = 8.4
+	\]
+
+	Since
+
+	\[
+	2.5536 \leq 8.4
+	\]
+
+	\[
+	\alpha_0 = 0.1
+	\]
+
+	is accepted.
+
+	After one iteration:
+
+	\[
+	x_1 = (0.4, 1.2)
+	\]
+
+	This cost much less as $m$ had to only
+	be iterated to 1 instead of 4 as in (a).
+	The choice of $\sigma$ here make it less
+	iterations but the length of the resulting
+	$f$ is greater.
+
+	(c) 
+	Apply one iteration of Newton's method with the same
+	starting point and stepsize rule as in (a). 
+	How does the cost of the new iterate compare to that obtained
+	in (a)?
+	How about the amount of work involved in finding the new
+	iterate?
+
+	Newtons method:
+
+	\[ x_{r+1} = 
+	x_r - \alpha_r (\nabla^2 f(x_r))^{-1}
+	\nabla f(x_r)
+	\]
+
+	Gradient at starting point (found previously):
+
+	\[ \nabla f(1,-2) = 
+	\begin{bmatrix} 6 \\ -32 \end{bmatrix}\]
+
+	Hessian:
+
+	\[ \nabla^2 f(x,y) = 
+	\begin{bmatrix} 6 & 0 \\ 0 & 12y^2 \end{bmatrix}
+	\]
+
+	\[ \nabla^2 f(1, -2) =
+	\begin{bmatrix} 6 & 0 \\ 0 & 48 \end{bmatrix}
+	\]
+
+	Newton direction:
+
+	\[
+	d_0 = 
+	-(\nabla^2 f(x_0))^{-1} \nabla f(x_0)
+	= \begin{bmatrix} -1 \\ 2/3 \end{bmatrix}
+	\]
+
+	Armijo step size:
+
+	\[ \alpha = s \beta^m \]   
+
+	For $m=0, \alpha = 1$:
+
+	\[ x_0 + \alpha d_0 = (1,-2) + (-1, 2/3)
+	= (0, -4/3)\]
+
+	\[ f(0, -4/3) = 256/81 \]   
+
+	\[ f(x_0) + \sigma \alpha
+	\nabla f(x_0)^T d_0 = 244/15 \]
+	
+	\[ f(x_0 + \alpha d_0) = 256/81
+	\leq \nabla f(x_0)^T d_0 = 244/15 \]
+
+	This step is accepted. After one
+	Newton iteration:
+
+	\[ x_1 = (0, -4/3) \]
+
+	The cost of this is more expensive because
+	the Hessian needs to be found. However,
+	finding the new iterate is much less costly.
+
+	\item 1.2.2
+
+	Describe the behavior of the steepest descent method with
+	constant stepsize s for the funtion
+	$f(x) = \|x\|^{2 + \alpha}$ where $\alpha \geq 0$.
+	For which values of s and $x^0$ does the method converge to
+	$x^* := 0$.
+	Relate your answer to the assumptions of Prop. 1.2.3.
+
+	Prop 1.2.3 (Convergence for a Constant Stepsize):
+	Let $x_k$ be a sequence generated by a gradient
+	method $x^{k+1} = x^k + \alpha^k d^k$ where $d^k$
+	is a gradeint related.
+	Assume that for some constant $L > 0$, we have
+	
+	\[ \| \nabla f(x) - \nabla f(y) \| \leq L \|x-y\|, \forall x,y \in R^n \]
+	
+	and that for all $k$ we have $d^k \neq 0$ and
+
+	\[ \epsilon \leq a^k \leq (2 - \epsilon) \overline{\alpha} \]
+
+	where
+
+	\[ \overline{\alpha} = \frac{| \nabla f(x^k)' d^k |}{L \| d^k \|^2} \]
+
+	and $\epsilon$ is a fixed positive scalar.
+	Then every limit point of $x^k$ is a 
+	stationary point.
+
+	\ 
+
+	Steepest descent with stepsize $s>0$:
+
+	\[ x_{k+1} = x_k - s \nabla f(x_k) \]
+
+	Gradient
+
+	\[ \nabla f(x) = 
+	\frac{(2 + \alpha)}{2} \|x\|^{\alpha} 2x =
+	(2 + \alpha) \|x\|^{\alpha} x
+	\]
+
+	\[ x_{k+1} = 
+	x_k - s(2 + \alpha) \|x_k\|^{\alpha} x_k =
+	[1 - s(2 + \alpha) \|x_k\|^{\alpha}]x_k
+	\]
+
+	Norms:
+
+	\[ \|x^{k+1} \| = 
+	|1 - s(2 + \alpha) \|x^k\|^{\alpha} | \|x^k\| \]
+
+	To converge to 0 the norm must decrease (say to less than 1):
+
+	\[ |1 - s(2 + \alpha) \|x^k\|^{\alpha} | < 1 \]
+
+	\[ -1 < 1 - s(2 + \alpha) \|x^k\|^{\alpha} < 1 \]
+
+	\[s(2 + \alpha) \|x^k\|^{\alpha} < 2\]
+
+	Case 1: $\alpha = 0$
+
+	\[f(x) = \|x\|^2 \]
+
+	\[ x_{k+1} = (1 - 2s)x^k \]
+
+	\[ x_{k} = (1 - 2s)^k x_0 \]
+
+	Converges to 0 if:
+
+	\[ |1 - 2s| < 1 \rightarrow 0 < s < 1 \]
+
+	So if $\alpha = 0$ then $0 < s < 1$
+
+	Case 2: $\alpha > 0$
+
+	Found earlier:
+
+	\[s(2 + \alpha) \|x^k\|^{\alpha} < 2\]
+
+	\[ s < \frac{2}{(2 + \alpha) \|x_0\|^{\alpha}} \]
+
+	For convergence to occur
+
+	\item 1.2.3
+
+	Consider the funtion $f:R^n \rightarrow R$ given by
+
+	$f(x) = \|x\|^{3/2} = (\|x\|^2)^{3/4}$
+
+	and the method of steepest descent with a contant stepsize.
+	Show that for this function, the Lipschitz condition
+	$\| \nabla f(x) - \nabla f(y) \| \leq L \| x - y \|$
+	for all $x$ and $y$ is not satisfied for any $L$.
+	Furthermore, for any value of constant stepsize,
+	the method either converges in finiste number of iterations
+	to the minimizing point $x^* = 0$ or else it does not converge
+	to $x^*$.
+
+	Gradient:
+
+	\[ f(x) = (\|x\|^2)^{3/4} = u^{3/4} \]
+
+	\[ \nabla f(x) = \frac{df}{du} \nabla u 
+	= 3/4 u^{-1/4} \nabla u \]    
+
+	\[ \nabla u = \nabla (x^T x) = 2x \]
+
+	\[ \nabla f(x) = 3/4(x^T x)^{-1/4} (2x) 
+	= 3/2(x^T x)^{-1/4} x
+	= 3/2 (\|x\|^{-1/2})x\]
+
+	Lipschitz:
+
+	Suppose there is an $L > 0$ s.t.:
+
+	\[ \| \nabla f(x) - \nabla f(y) \| \leq
+	L \|x - y\|, \forall x,y \]
+
+	Suppose $y = 0$ and x is positive:
+
+	\[
+	\|\nabla f(x)-\nabla f(0)\|
+	=
+	\left\|\frac{3}{2}\|x\|^{-1/2}x\right\|
+	=
+	\frac{3}{2}\|x\|^{1/2}
+	\]
+
+	Liphshits requires:
+
+	\[ 3/2 \|x\|^{1/2} \leq L\|x\| \]
+
+	\[ 3/2 \leq L \|x\|^{1/2} \]
+
+	As $x \rightarrow 0$
+
+	\[ L \|x\|^{1/2} \rightarrow 0 \leq    
+	3/2 \]
+
+	So Lipschitz does not apply $\forall L$
+
+	Part 2: Steepest descent with constant stepsize
+
+	Let the constant stepsize be $\alpha \geq 0$
+
+	\[ x_{k+1} = x_k - \alpha \nabla f(x_k)\]
+
+	\[ x_{k+1} = 
+	x_k - \frac{\alpha 3}{2} \|x_k\|^{-1/2} x_k\]
+
+	\[ x_{k+1} = 
+	\left( 
+	1 - \frac{3 \alpha}{2 \sqrt{\|x_k\|}} 
+	\right) x_k
+	\]
+
+	\[
+	\|x_{k+1}\| = 
+	|{1 - \frac{3 \alpha}{2 \sqrt{\|x_k\|}}}| \ \|x_k\|
+	\] 
+
+	Define:
+
+	\[ c = \frac{3 \alpha}{2}, \ r_k = \|x_k\| \]
+
+	\[ r_{k+1} = |1 - \frac{c}{sqrt{r_k}}| r_k \]   
+
+	Define:
+
+	\[ u_k = \frac{\sqrt{r_k}}{c} \]
+
+	\[ r_k = c^2 u_k^2 \]
+
+	Then
+
+	\[ u_{k+1} = \sqrt{u_k |u_k - 1}| \]
+
+	For \[ 0 < u_k < 1/2 \]:
+
+	\[ u_{k+1} = \sqrt{u_k (1 - u_k)} \]
+
+	\[u_{k+1}^2 = u_k(1 - u_k) > u_k \]
+
+	Therefore as \[ u_k \rightarrow 0 \]
+	$f$ begins to move away from 0.
+
+	\[ r_k = c^2 u_k^2 = \|x_k\| \]
+
+	So if  $u_k$ does not converge to 
+	zero then $x_k$ does not either.
+
+	\item 1.2.7
+
+	An electrical engineer wants to maximize the current $I$
+	between two points $A, B$ of a complex network by adjusting
+	the values $x_1, x_2$ of the two variable resitors, 
+	where $0 \leq x_1 \leq R_1, \ 0 \leq x_2 \leq R_2$
+	and $R_1, R_2$ are given. 
+	The engineer does not have an adequate mathematical model
+	of the network decides to adpot the following procedure.
+	She keeps the value $x_2$ of the second resistor fixed
+	and adjust the value of the first resistor until the
+	current $I$ is maximized.
+	She then keeps the value of $x_1$ of the first resitor 
+	fixed and adjust the value of the second resistor until
+	the current $I$ si maximized.
+	She then repeats the procedure unil no further progress
+	can be made.
+	She knows a priori that during this procedure the values 
+	$x1, x2$ can never reach their extreme values $0, R1, R2$.
+	Explain whether there is a sound theoretical basis for the
+	engineers procedure.
+	Hint: Consider how the steepest descent method works for 
+	two-dimensional problems.
+
+	This does not work. She is using coordinate descent.
+	Since they can never reach their bounds she
+	will reach a point were 
+
+	\[ \frac{\delta I}{\delta x_1}, 
+	\frac{\delta I}{\delta x_2} = 0 \]
+
+	This is therefore a stationary point.
+	However a stationary point does not gurantee
+	a global minimum as it could be a saddle point.
+	Then moving in a diagonal direction would
+	further decrease the function.
+
+
+
+	\item  Show that a second-order continuously 
+	differentiable function 
+	$f(x):\mathbb{R}\to \mathbb{R}$ 
+	is convex {\it if and only if} 
+	its second-order derivative is non-negative.
+
+	\[ f \ is \ convex \leftrightarrow f"(x) \geq 0, \
+	\forall x \in \mathbb{R} \]
+
+	If $f"(x) \geq 0$ then $f'(x) 
+	\leq f'(y)$ for $x < y$
+
+	Mean Value theoreom: 
+	$ \exists \ c \in (x,y) s.t.$:
+
+	\[ \frac{f(y) - f(x)}{y - x} = f'(c) \]
+
+	As $f'$ is not decreasing:
+
+	\[ f'(x) \leq f'(c) \]
+
+	So the tangent line at every 
+
+	\[ f(y) = f(x) + f'(c)(y-x) 
+	\geq f(x) + f'(x)(y - x) \]
+
+	As it holds for 
+	$\forall (x,y)$ then $(x,y)$
+	can be flipped
+
+	\[ f(x) \geq f(y) + f'(y)(x -y) \]   
+
+	Adding $f(x), f(y)$ inequalities
+	together we get:
+
+	\[ 0 \geq f'(x)(y - x) + f'(y)(x - y) \]   
+
+	\[ y - x \geq 0 \]   
+
+	\[ f'(x) \leq f'(y) \]   
+
+	Therefor $f'$ is nondecreasing at all x
+
+	\[ f"(x) \geq 0 \]
+
+	\item Suppose that 
+	$f(\mathbf{x}):\mathbb{R}^n\to \mathbb{R}$ 
+	is convex. Please show the following properties
+	\begin{enumerate}
+		\item $f(\mathbf{x})-f(\mathbf{y})\ge \langle \nabla f(\mathbf{y}), \mathbf{x}-\mathbf{y}\rangle, \; \forall~\mathbf{x}, \mathbf{y}\in\mathbb{R}^n$
+		
+		Assume $f$ is twice differntiable and convex:
+
+		\[ \nabla^2 f(x) \geq 0 \]   
+
+		Second order taylor expasion:
+
+		\[ c = y + t(x-y) \]   
+
+		\[ f(x) = f(y) + \nabla f(y)^T (x-y) + 
+		1/2(x-y)^T \nabla^2 f(c)(x-y) \]   
+
+		Because $f$ is convex:
+
+		\[ \nabla^2 f(c) \geq 0 \rightarrow
+		f(x) \geq f(y) + \nabla f(y)^T (x-y)\]
+
+		\[ f(x) - f(y) \geq 
+		\langle \nabla f(y), x-y \rangle \]   
+
+		$x,y$ were left arbitrary so this applies
+		$\forall x,y \in \mathbb{R}^n$
+		
+		\item If $g(y): \mathbb{R}\to\mathbb{R}$ 
+		is a monotonically non-decreasing 
+		{\bf convex} function, 
+		then $g(f(\mathbf{x}))$ 
+		is also a convex function. 
+
+		\[ h(x) = g(f(x)) \]   
+
+		Prove $h$ is convex:
+
+		As $f$ is convex: 
+
+		\[ f(tx + (1-t)y) \leq t f(x) + (1 - t)f(y) \]
+
+		Because g is always increasing:
+
+		\[ g(f(tx + (1-t)y)) \leq g(t f(x) + (1-t)f(y)) \]   
+
+		Because g is convex (same as done in for $f$):
+
+		\[ g(t f(x) + (1-t)f(y)) \leq t g(f(x)) + (1-t)g(f(y)) \]
+
+		Combining the two inequalities:
+
+		\[ g(f(tx + (1-t)y)) \leq t g(f(x)) + (1-t)g(f(y)) \]
+
+		\[ h(tx + (1-t)y) \leq t h(x) + (1-t)h(y) \]
+
+		This defines $h(x) = g(f(x))$ as convex
+
+		\item If $g(y): \mathbb{R}\to\mathbb{R}$ 
+		is a decreasing {\bf convex} function, 
+		then provide an example showing that 
+		$g(f(\mathbf{x}))$ may not be a convex function.
+		
+		Since g is decreasing, this does not hold anymore:
+
+		\[ g(f(tx + (1-t)y)) \leq g(t f(x) + (1-t)f(y)) \]   
+
+		Therefore this is not necessairly true:
+
+		\[ g(f(tx + (1-t)y)) \leq t g(f(x)) + (1-t)g(f(y)) \]
+
+		\[ h(tx + (1-t)y) \leq t h(x) + (1-t)h(y) \]
+
+		So $h$ may not be convex
+
+		\end{enumerate}
+
+	\item Let $\mathbf{A}\ne 0$ be a 
+	rank one square matrix, i.e., 
+	$\mathbf{A} = \mathbf{x}_0\mathbf{y}^T_0\ne 0$, for some $\mathbf{x}_0, \mathbf{y}_0\in\mathbb{R}^n$. Consider the following optimization problem
+	\begin{align}
+	\min_{\mathbf{x},\mathbf{y}}&\quad \frac{1}{2}\| \mathbf{A} -\mathbf{x}\mathbf{y}^T \|^2_F\nonumber\\
+	\mbox{s.t.}&\quad \mathbf{x},\mathbf{y}\in\mathbb{R}^n
+	\end{align}
+	Please answer the following questions.
+	\begin{itemize}
+	\item Show that it is  {\bf not} a convex optimization problem.
+	
+	\[ F(x,y) = 1/2 \|A - xy^T \|^2_F \]   
+
+	\[ A = x_0 y_0^T \neq 0 \]   
+
+	Two points:
+
+	\[ (x_1, y_1) = (x_0, y_0), \ 
+	(x_2, y_x) = (-x_0, -y_0) \]   
+
+	First point:
+
+	\[ x_1 y_1^T = x_0 y_0^T = A \]   
+
+	\[ F(x_1, y_1) = 1/2 \|A - A \|^2_F = 0 \]
+
+	Second Point:
+
+	\[ x_2 y_2^T = (-x_0) (-y_0)^T = A \]   
+
+	\[ F(x_2, y_2) = 1/2 \|A - A \|^2_F = 0 \]
+
+	Midpoint: $(x_{mid}, x_{mid}) = (0,0)$
+
+	\[ x_{mid} \ y_{mid}^T = 0 \]   
+
+	\[ F(x_{mid}, y_{mid}) = 1/2 \|A - 0 \|^2_F =
+	1/2 \|A\|^2_F > 0 (As A \neq 0)\]
+
+	If F were convex then:
+
+	\[ F(x_{mid}, y_{mid}) \leq 1/2 F(x_1, x_2) + 1/2 F(x_2, y_2) \]
+
+	But \[ F(x_{mid}, y_{mid}) > 0\] so $F(x,y)$ is not convex
+
+	\item Find the set of stationary points.
+	
+	Stationary point:
+
+	\[ \nabla_x F = 0, \nabla_y F = 0 \]
+
+	Gradients:
+
+	\[ \nabla_x F = (xy^T - A)y =
+	x(y^Ty) - Ay \]
+
+	\[ A = x_0 y_0^T \rightarrow 
+	A y = x_0(y_0^T y) \]
+
+	\[ \nabla_x F = x(y^Ty) - x_0(y_0^T y)\]   
+
+	\[ y^Ty = \|y\|^2 \rightarrow 
+	\nabla_x F = x \|y\|^2 - (y_0^T y)x_0 \]   
+
+	Similarly:
+
+	\[ \nabla_y F =
+	y \|x\|^2 - (x_0^T x)y_0 \]   
+
+	For a stationary point 
+	$ \nabla_x F = \nabla_y F = 0 $
+
+	Then:
+
+	\[ (1) \ \|y\|^2 x = (y_0^T y)x_0, \ 
+	(2) \ \|x\|^2 = (x_0^T x)y_0 \]   
+
+	Case 1: $ x \neq 0, \ y \neq 0$
+
+	From 1,2 $x||x_0, y||y_0$. 
+	$\alpha,\beta \neq 0$
+
+	\[ x = \alpha x_0, \ y = \beta y_0 \]
+
+	Substitute into (1):
+
+	\[ \| \beta y_0 \|^2 (\alpha x_0) =
+	(y_0^T \beta y_0) x_0 \]
+
+	\[ \alpha \beta^2 \|y_0\|^2 = 
+	\beta \|y_0\|^2 \]
+
+	\[ \alpha \beta = 1 \]
+
+	\[ x = \alpha x_0, \
+	y = \frac{1}{\alpha} y_0, \
+	\]
+
+	are stationary points
+
+	Case 2: $y=0, x \neq 0$
+
+	Equation 1 is automatically satisfied.
+	Equation 2 is:
+
+	\[0 = (x_0^T x)y_0 = x_0^T x \rightarrow x \perp x_0\]
+
+	\[\nabla_x F = \|0\|^2 x - (0)x_0 \]
+
+	\[\nabla_y F = \|x\|^2 (0) - (0) y_0 \]
+
+	Then $(x,0), x \perp x_0$ are stationary points
+
+	Case 3: $x=0, y \neq 0$
+
+	Equation 2 is automatically satisfied.
+	Equation 1 is:
+
+	\[y_0^T y = 0 \rightarrow y \perp y_0 \]
+
+	\[\nabla_x F = \|y\|^2 0 - (0) x_0 \]
+
+	\[\nabla_y F = \|0\|^2 y - (0) y_0 \]
+
+	Then $(y,0), y \perp x_0$ are stationary points
+
+	\item {\bf (bonus)} Show that every local optimum of the problem is a global optimum 
+		
+			
+	\end{itemize}
+
+	\end{enumerate}
+
+	\section{\bf Programming Assignment}
+	In this assignment, you are asked to experiment with
+	\begin{enumerate}
+		\item Steepest descent method with constant step size rule 
+		
+		\[ x_{k+1} = x_k - \alpha \nabla f(x_k) \]   
+
+		Constant stepsize (Lipschitz):
+		
+		\[ \| \nabla f(x) - \nabla f(y) \| \leq L \|x - y\| \]
+
+		\[ \alpha = \frac{1}{L} = \frac{1}{\lambda_{max}(Q)} \]
+
+		\item Steepest descent method with Armijo step size rule
+		
+		\[ x_{k+1} = x_k - \alpha \nabla f(x_k) \] 
+		
+		Armijo rule ($s > 0, \ 0 < \beta < 1, \ 0 < \sigma < \frac{1}{2}$)
+
+		\[ \alpha = s, \beta s, \beta^2 s ... \]   
+
+		\[ f(x_k - \alpha \nabla f(x_k)) - f(x_r) \leq 
+		\sigma \alpha \nabla f(x_r)^T d_r\]
+
+		Faster computing:
+
+		\[g_r = Q x_r + b, \ d_r = -g_r \]
+
+		Calculate $f(x_r)$ and $gd$ once per step
+
+		\[ fx = f(x_r), \
+		gd = g_r^T d_r = -\|g_r\|^2
+		\]
+
+		Check each armijo iteration:
+		\[ f(x_r + sd_r) \leq 
+		f(x_r) + \sigma s g_r^T d_r \]
+
+		\item Diagonally scaled gradient method (using the Hessian diagonals), constant step size rule
+		
+		\[ x_{k+1} = x_k + \alpha d_r \] 
+
+		\[ d_r = -D^{-1} \nabla f(x_r) \]   
+
+		$D$ is the diagonal matrix of the Hessian
+
+		\item Conjugate gradient method, exact minimization step size rule
+		
+		\[ x_{k+1} = x_k + \alpha d_r \] 
+
+	\end{enumerate}
+	to solve the following convex quadratic minimization problem:
+	\begin{align}
+	\min&\quad \frac{1}{2}x^T Q x + b^T x\nonumber\\
+	\mbox{s.t.}&\quad  x\in\mathbb{R}^n
+	\end{align}
+	You can randomly generate the data matrix $Q$ but make sure that it is symmetric and it is positive definite.  When condition numbers need to be controlled, note that for any data matrix $Q$, we have the following eigen decomposition $Q= U \Sigma V$, where $U$ and $V$ are orthonormal  matrices and $\Sigma$ is a diagonal matrix with diagonals being the eigenvalues. You can change the diagonals of $\Sigma$ to obtain the desired largest and smallest eigenvalues for your data matrix $Q$. 
+
+	An example code for perform gradient descent has been provided online at \href{https://optimai-lab.github.io/LLM-OPT/lectures/Chapter2/gradient.html}{course website}, Section 2.2, Example 1 and Example 2. 
+
+
+	What you need to turn in:
+	\begin{enumerate}
+		\item Well documented python codes (or any other codes of a scientific computing language). 
+		\item Plots of CPU time and progression of objective values (relative to the minimum)
+		for various choices of step size rules, algorithms, problem sizes ($n = 100, 500$),
+		and condition numbers ($c = 10, 5000$).
+		\item Brief discussions of your findings relative to the convergence theory.
+	\end{enumerate}
+
+
+\end{document}

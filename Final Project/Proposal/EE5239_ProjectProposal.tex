@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+
+\title{\textbf{EE 5239 Course Project Proposal}\\
+Optimization for Multimodal Sensor Fusion}
+\author{Timothy Hess}
+\date{Fall 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Project Description}
+
+The goal of this project is to investigate the use of optimization methods for
+multimodal sensor fusion. Many engineering systems use multiple sensors to estimate
+a quantity or state that cannot be measured accurately using a single sensor. The
+performance of these systems depends on how information from the available sensors
+is combined. This project will investigate how optimization can be used to determine
+an effective method of combining measurements from multiple sensors.
+
+A publicly available dataset containing simultaneous measurements from multiple
+sensors will be selected for the project. Preference will be given to physiological
+sensor data, such as measurements related to cardiovascular, respiratory, or activity
+signals. The selected data will be processed and divided into appropriate training
+and testing datasets.
+
+A sensor fusion model will then be developed to estimate a target quantity using the
+available sensor measurements. The parameters of this model will be determined using
+optimization. Different optimization methods will be implemented and compared to
+investigate their convergence behavior, computational requirements, and resulting
+estimation performance. The specific model and optimization algorithms will be
+selected after reviewing the characteristics of the chosen dataset and relevant
+literature.
+
+The project will also investigate the importance of the individual sensors. Models
+using the complete sensor set will be compared with models using reduced sensor sets
+to determine whether similar estimation performance can be achieved with fewer
+measurements. If appropriate for the selected model, regularization or other
+optimization-based approaches to sensor selection will also be investigated.
+
+The project will be implemented primarily in Python using standard numerical and
+data-analysis libraries. The expected computational requirements should be suitable
+for a personal computer. Results will be evaluated using appropriate estimation
+error metrics as well as measures of optimization performance, such as convergence
+behavior and computational time.
+
+The expected outcome of the project is a comparison of optimization approaches for
+multimodal sensor fusion and an analysis of the tradeoff between estimation
+performance, computational requirements, and the number of sensors used. Additional
+model complexity or alternative optimization formulations may be investigated if
+time permits.
+
+\end{document}
