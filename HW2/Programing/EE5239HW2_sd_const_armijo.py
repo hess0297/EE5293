@@ -7,7 +7,7 @@ problem_sizes = [100, 500]
 condition_numbers = [10, 5000]
 
 max_iter = 100000
-tol = 1e-6
+tol = 1e-5
 
 # Armijo parameters
 sigma = 0.1
@@ -36,7 +36,7 @@ for n in problem_sizes:
         A = np.random.randn(n, n) # random matrix
         U, _ = np.linalg.qr(A) # orthoganal matrix to A
 
-        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n, 
+        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n (not accurate but fine for comparing methods) 
         Q = U @ np.diag(eigenvalues) @ U.T # create Q
         b = np.random.randn(n) # random linear coefficient
 
@@ -69,26 +69,26 @@ for n in problem_sizes:
                 1000 * (time.perf_counter() - start_time)
             )
 
-            # stopping condition
+            # Stopping condition
             if np.linalg.norm(grad) < tol:
                 break
 
-        # steepest descent direction
-        d = -grad
+            # Steepest descent direction
+            d = -grad
 
-        # Compute quantities once
-        fx = f(x)
-        gd = grad @ d
+            # Compute quantities once
+            fx = f(x)
+            gd = grad @ d
 
-        # Armijo backtracking
-        s = 1.0
+            # Armijo backtracking
+            s = 1.0
 
-        # Armijo condi
-        while f(x + s*d) > fx + sigma*s*gd:
-            s = beta*s
+            # Armijo condition
+            while f(x + s*d) > fx + sigma*s*gd:
+                s = beta*s
 
-        # update
-        x = x + s*d
+            # Update
+            x = x + s*d
 
         # objective error vs iteration
         ax1 = axes[plot_num, 0]
@@ -114,6 +114,7 @@ for n in problem_sizes:
             f"n = {n}, c = {c}, "
             f"Iterations = {k}, "
             f"CPU Time = {cpu_times[-1]:.2f} ms, "
+            f"Gradient Norm = {np.linalg.norm(Q @ x + b):.2e}, "
             f"Error = {error[-1]:.2e}"
         )
 

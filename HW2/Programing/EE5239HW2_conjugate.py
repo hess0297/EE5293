@@ -32,7 +32,7 @@ for n in problem_sizes:
         A = np.random.randn(n, n) # random matrix
         U, _ = np.linalg.qr(A) # orthoganal matrix to A
 
-        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n, 
+        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n (not accurate but fine for comparing methods)
         Q = U @ np.diag(eigenvalues) @ U.T # create Q
         b = np.random.randn(n) # random linear coefficient
 

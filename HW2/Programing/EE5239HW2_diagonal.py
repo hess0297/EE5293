@@ -32,7 +32,7 @@ for n in problem_sizes:
         A = np.random.randn(n, n) # random matrix
         U, _ = np.linalg.qr(A) # orthoganal matrix to A
 
-        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n, 
+        eigenvalues = np.linspace(1, c, n) # equaly spaced numbers between 1 and n (not accurate but fine for comparing methods) 
         Q = U @ np.diag(eigenvalues) @ U.T # create Q
         b = np.random.randn(n) # random linear coefficient
 
@@ -55,7 +55,7 @@ for n in problem_sizes:
         # L = max eigen * M
         D_inv_sqrt = 1 / np.sqrt(diagonal)
         M = D_inv_sqrt[:, None] * Q * D_inv_sqrt[None, :]
-        L = np.linalg.eigvalsh(M)[-1]
+        L = np.linalg.eigvalsh(M)[-1] # largest eigenvalue
         s = 1 / L
 
         # start point
