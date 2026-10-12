@@ -10,6 +10,9 @@
 \usepackage{amsfonts}
 \usepackage{bm}
 \usepackage{hyperref}
+\usepackage{float}
+
+\graphicspath{{C:/Users/count/OneDrive/Desktop/Fall26/EE5293/HW2/}}
 
 \DeclareMathOperator{\argmax}{argmax}
 \DeclareMathOperator{\argmin}{argmin}
@@ -883,6 +886,35 @@
 		\item Plots of CPU time and progression of objective values (relative to the minimum)
 		for various choices of step size rules, algorithms, problem sizes ($n = 100, 500$),
 		and condition numbers ($c = 10, 5000$).
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{sd_const.png}
+			\caption{Convergence of steepest descent with constant step size.}
+			\label{fig:sd_const}
+		\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{sd_armijo.png}
+			\caption{Convergence of steepest descent with Armijo step size.}
+			\label{fig:sd_armijo}
+		\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{diagonal.png}
+			\caption{Convergence of diagonally scaled gradient descent with constant step size.}
+			\label{fig:diagonal}
+		\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{conjugate.png}
+			\caption{Convergence of conjugate gradient with exact line search.}
+			\label{fig:conjugate}
+		\end{figure}
+
 		\item Brief discussions of your findings relative to the convergence theory.
 		
 		It was found that all four methods converged more slowly for higher condition numbers.
